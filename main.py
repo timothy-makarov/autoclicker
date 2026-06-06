@@ -44,13 +44,22 @@ def init_args():
     )
 
     parser.add_argument(
+        "--failsafe",
+        help="Close the program when the mouse pointer reaches the top-left corner of the screen.",
+        action="store_true",
+        default=False,
+    )
+
+    parser.add_argument(
         "--button",
-        help="Set an image file(s) as the button template.",
+        help="Set one or more image files as the button template.",
         default="button.png",
     )
 
     parser.add_argument(
-        "--confidence", help="Set the match template confidence.", default=0.8
+        "--confidence",
+        help="Set the confidence threshold for template matching.",
+        default=0.8,
     )
 
     parser.add_argument(
@@ -102,7 +111,7 @@ def main():
     templates = [cv2.imread(x) for x in buttons]
     logging.info(f"Loaded {len(templates)} templates: {', '.join(buttons)}.")
 
-    pyautogui.FAILSAFE = True
+    pyautogui.FAILSAFE = bool(args.failsafe)
     logging.info("Press Ctrl+C to stop.")
 
     while True:
