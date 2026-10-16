@@ -1,14 +1,15 @@
 [project]
 name = "autoclicker"
-version = "1.0.0"
-description = "A background tool that watches your screen and dismisses OK buttons in desktop applications automatically."
+version = "1.1.0"
+description = "A background tool that monitors your screen or a specific app and automatically clicks buttons."
 readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
     "numpy>=2.4.6",
     "opencv-python>=4.13.0.92",
     "pillow>=12.2.0",
-    "pyautogui>=0.9.54",
+    "pywin32>=312",
+    "pywinauto>=0.6.9",
 ]
 
 [build-system]
