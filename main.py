@@ -167,9 +167,7 @@ def list_windows():
     return result
 
 
-def click_window_point(
-    top_hwnd, x, y, topmost_child_class_name="Chrome_RenderWidgetHostHWND"
-):
+def click_window_point(top_hwnd, x, y, topmost_child_class_name):
     app = Application(backend="win32").connect(handle=top_hwnd)
     main_window = app.window()
     child_control = main_window.child_window(class_name=topmost_child_class_name)
@@ -234,9 +232,7 @@ def main():
                         continue
 
                     click_window_point(
-                        hwnd,
-                        crds[0],
-                        crds[1],
+                        hwnd, crds[0], crds[1], args.topmost_child_class_name
                     )
                     logging.getLogger(__appname__).info(
                         f'Clicked on window "{title}" ({crds[0]}; {crds[1]}).'
