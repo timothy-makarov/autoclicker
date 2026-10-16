@@ -14,6 +14,7 @@ import win32gui
 import win32ui
 from PIL import Image
 from pywinauto.application import Application
+from pywinauto.findwindows import ElementNotFoundError
 
 __version__ = "1.1.0"
 __appname__ = "autoclicker"
@@ -231,12 +232,19 @@ def main():
                         logging.getLogger(__appname__).info("No match found.")
                         continue
 
-                    click_window_point(
-                        hwnd, crds[0], crds[1], args.topmost_child_class_name
-                    )
-                    logging.getLogger(__appname__).info(
-                        f'Clicked on window "{title}" ({crds[0]}; {crds[1]}).'
-                    )
+                    try:
+                        click_window_point(
+                            hwnd, crds[0], crds[1], args.topmost_child_class_name
+                        )
+                    except ElementNotFoundError:
+                        logging.getLogger(__appname__).exception(
+                            f'Failed to click on window "{title}" ({crds[0]}; {crds[1]}).'
+                        )
+                    else:
+                        logging.getLogger(__appname__).info(
+                            f'Clicked on window "{title}" ({crds[0]}; {crds[1]}).'
+                        )
+
                     break
 
         time.sleep(interval)
